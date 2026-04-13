@@ -1,0 +1,348 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Dashboard | Model Rewards</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container header-inner">
+        <div class="brand">
+          <span class="logo">M</span>
+          <span class="name">Model Rewards</span>
+        </div>
+        <nav class="nav">
+          <a href="index.html#how">How It Works</a>
+          <a href="index.html#offers">Offers</a>
+          <a href="index.html#rewards">Rewards</a>
+          <a href="payouts.html">Payout Methods</a>
+          <a href="dashboard.html">Dashboard</a>
+        </nav>
+        <div class="auth-actions" data-auth-actions>
+          <span class="auth-status" data-auth-status>Signed out</span>
+          <button class="btn ghost" data-open-auth="signin">Sign In</button>
+          <button class="btn primary" data-open-auth="signup">Sign Up</button>
+          <button class="btn outline" data-signout hidden>Sign Out</button>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero compact">
+        <div class="container hero-grid">
+          <div class="hero-copy">
+            <p class="eyebrow">Dashboard</p>
+            <h1>Track earnings and withdrawals in one place.</h1>
+            <p class="lead">
+              View balances, recent payouts, and manage your withdrawal
+              settings.
+            </p>
+            <div class="cta-row">
+              <button class="btn primary" data-open-withdraw>
+                Update Payout Method
+              </button>
+              <a class="btn outline" href="payouts.html">View Payout Methods</a>
+            </div>
+          </div>
+          <div class="hero-card">
+            <div class="balance">
+              <p class="label">Current balance</p>
+              <p class="value" data-balance>$258.00</p>
+              <button class="btn mini">Withdraw</button>
+            </div>
+            <div class="activity">
+              <p class="label">Latest activity</p>
+              <ul id="activity-list">
+                <li>
+                  <span>Complete onboarding</span>
+                  <strong>+ $5.00</strong>
+                </li>
+                <li>
+                  <span>Survey: Rewards</span>
+                  <strong>+ $1.50</strong>
+                </li>
+                <li>
+                  <span>Play Game Y</span>
+                  <strong>+ $9.00</strong>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="container">
+          <div class="section-title">
+            <h2>Withdrawal history</h2>
+            <p>Recent payout requests and processing status.</p>
+          </div>
+          <div class="card">
+            <div class="table">
+              <div class="table-row table-head">
+                <span>Date</span>
+                <span>Method</span>
+                <span>Amount</span>
+                <span>Status</span>
+              </div>
+              <div id="withdrawal-rows">
+                <div class="table-row">
+                  <span>—</span>
+                  <span>—</span>
+                  <span>—</span>
+                  <span>Sign in to view history</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section alt">
+        <div class="container">
+          <div class="section-title">
+            <h2>Earnings activity</h2>
+            <p>Latest credited rewards and system adjustments.</p>
+          </div>
+          <div class="card">
+            <div class="activity-list" id="earnings-rows">
+              <div class="activity-row">
+                <span>—</span>
+                <span>—</span>
+                <span>Sign in to view activity</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="container split">
+          <div>
+            <h2>Request a withdrawal</h2>
+            <p>
+              Submit a payout request once your balance meets the minimum for
+              the selected method.
+            </p>
+            <ul class="checklist">
+              <li>Choose payout method</li>
+              <li>Enter amount in USD</li>
+              <li>Confirm destination</li>
+            </ul>
+          </div>
+          <div class="card">
+            <form class="modal-body" id="withdraw-request-form">
+              <label class="field">
+                <span>Payout method</span>
+                <select name="method" required>
+                  <option value="">Select method</option>
+                  <option>PayPal</option>
+                  <option>Binance Wallet</option>
+                  <option>Google Pay</option>
+                  <option>Visa</option>
+                  <option>Amazon</option>
+                </select>
+              </label>
+              <label class="field">
+                <span>Amount (USD)</span>
+                <input type="number" name="amount" min="1" step="0.01" required />
+              </label>
+              <label class="field">
+                <span>Destination</span>
+                <input
+                  type="text"
+                  name="destination"
+                  placeholder="Email or wallet address"
+                  required
+                />
+              </label>
+              <button class="btn primary" type="submit">Request Withdrawal</button>
+              <p class="form-note" id="withdraw-request-note" hidden>
+                Request submitted for review.
+              </p>
+            </form>
+          </div>
+        </div>
+      </section>
+
+      <section class="section alt" data-admin-panel hidden>
+        <div class="container split">
+          <div>
+            <h2>Admin balance updates</h2>
+            <p>
+              Adjust user balances after verification. This panel is visible
+              only to admin accounts.
+            </p>
+            <ul class="checklist">
+              <li>Search by user UID</li>
+              <li>Set exact balance amount</li>
+              <li>Record internal notes</li>
+            </ul>
+          </div>
+          <div class="card">
+            <form class="modal-body" id="admin-balance-form">
+              <label class="field">
+                <span>User UID</span>
+                <input type="text" name="uid" placeholder="User UID" required />
+              </label>
+              <label class="field">
+                <span>New balance (USD)</span>
+                <input type="number" name="balance" min="0" step="0.01" required />
+              </label>
+              <label class="field">
+                <span>Internal note</span>
+                <input type="text" name="note" placeholder="Reason for update" />
+              </label>
+              <button class="btn primary" type="submit">Update Balance</button>
+              <p class="form-note" id="admin-note" hidden>
+                Balance updated successfully.
+              </p>
+            </form>
+          </div>
+        </div>
+        <div class="container split">
+          <div>
+            <h2>Admin add earnings</h2>
+            <p>
+              Credit earnings to a user account and log the activity entry for
+              audit history.
+            </p>
+            <ul class="checklist">
+              <li>Target user UID</li>
+              <li>Enter credit amount</li>
+              <li>Add a short reason</li>
+            </ul>
+          </div>
+          <div class="card">
+            <form class="modal-body" id="admin-earnings-form">
+              <label class="field">
+                <span>User UID</span>
+                <input type="text" name="uid" placeholder="User UID" required />
+              </label>
+              <label class="field">
+                <span>Credit amount (USD)</span>
+                <input type="number" name="amount" min="0.01" step="0.01" required />
+              </label>
+              <label class="field">
+                <span>Reason</span>
+                <input type="text" name="detail" placeholder="Offer completion" />
+              </label>
+              <button class="btn primary" type="submit">Add Earnings</button>
+              <p class="form-note" id="admin-earnings-note" hidden>
+                Earnings added successfully.
+              </p>
+            </form>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <div>
+          <div class="brand">
+            <span class="logo">M</span>
+            <span class="name">Model Rewards</span>
+          </div>
+          <p class="muted">Visibility and control for trusted payouts.</p>
+        </div>
+        <div class="footer-links">
+          <a href="index.html">Home</a>
+          <a href="privacy.html">Privacy</a>
+          <a href="terms.html">Terms</a>
+          <a href="support.html">Support</a>
+        </div>
+      </div>
+    </footer>
+
+    <div class="modal-backdrop" data-modal hidden>
+      <div class="modal">
+        <div class="modal-header">
+          <div>
+            <p class="eyebrow">Withdrawal Access</p>
+            <h3>Enable payout methods</h3>
+          </div>
+          <button class="icon-btn" data-close-modal aria-label="Close">×</button>
+        </div>
+        <form class="modal-body" id="withdraw-form">
+          <label class="field">
+            <span>Primary payout method</span>
+            <select name="method" required>
+              <option value="">Select method</option>
+              <option>PayPal</option>
+              <option>Binance Wallet</option>
+              <option>Google Pay</option>
+              <option>Visa</option>
+              <option>Amazon</option>
+            </select>
+          </label>
+          <label class="field">
+            <span>Account identifier</span>
+            <input
+              type="text"
+              name="identifier"
+              placeholder="Email, wallet address, or token"
+              required
+            />
+          </label>
+          <label class="field">
+            <span>Minimum payout threshold</span>
+            <select name="threshold">
+              <option>$5</option>
+              <option>$10</option>
+              <option>$20</option>
+              <option>$50</option>
+            </select>
+          </label>
+          <div class="field checkbox">
+            <input type="checkbox" id="instant" name="instant" />
+            <label for="instant">Enable instant payouts when eligible</label>
+          </div>
+          <button class="btn primary" type="submit">Save Settings</button>
+          <p class="form-note" id="form-note" hidden>
+            Settings saved. Update will apply to future withdrawals.
+          </p>
+        </form>
+      </div>
+    </div>
+
+    <div class="modal-backdrop" data-auth-modal hidden>
+      <div class="modal">
+        <div class="modal-header">
+          <div>
+            <p class="eyebrow" id="auth-eyebrow">Account Access</p>
+            <h3 id="auth-title">Sign In</h3>
+          </div>
+          <button class="icon-btn" data-close-auth aria-label="Close">×</button>
+        </div>
+        <form class="modal-body" id="auth-form">
+          <label class="field" data-auth-name hidden>
+            <span>Full name</span>
+            <input type="text" name="fullname" placeholder="Jane Doe" />
+          </label>
+          <label class="field">
+            <span>Email</span>
+            <input type="email" name="email" placeholder="you@email.com" required />
+          </label>
+          <label class="field">
+            <span>Password</span>
+            <input type="password" name="password" placeholder="••••••••" required />
+          </label>
+          <button class="btn primary" type="submit" id="auth-submit">
+            Continue
+          </button>
+          <p class="form-note" id="auth-note" hidden>
+            This is a UI demo. Connect your real auth provider to activate.
+          </p>
+          <button class="btn outline" type="button" data-toggle-auth>
+            Need an account? Create one
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <script type="module" src="app.js"></script>
+  </body>
+</html>
